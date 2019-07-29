@@ -15,8 +15,11 @@ $("#player1button").on("click",function(event){
     player1NameDisplay();
 
     readyPlayer1();
+
+    $("#player1Name").hide();
+    $("#player1button").hide();
     
-    // $("#player1Name").val("");
+   
 });
 
 
@@ -30,8 +33,11 @@ $("#player2button").on("click",function(event){
     player2NameDisplay();
 
     readyPlayer2();
+
+    $("#player2Name").hide();
+    $("#player2button").hide();
     
-    // $("#player2Name").val("");
+   
 });
 
 function readyPlayer1 () {
