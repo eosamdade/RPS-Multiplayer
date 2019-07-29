@@ -21,7 +21,8 @@ var player1name = "";
 var player2Name = "";
 var player1NewMsg = "";
 var player2NewMsg = "";
-
+var newMsgP1 = "";
+var newMsgP2 = "";
 
 
 //enter click event
@@ -119,7 +120,7 @@ function readyPlayer2 () {
 
 
 
-
+//RPS GAME SESSION
 
 //player one rps
 $("#p1Rock").on("click",function(){
@@ -149,3 +150,37 @@ $("#p2Scissors").on("click",function(){
 
 
 
+//MSG APP
+
+$("#player1Msgs").on("click",function(event){
+    event.preventDefault();
+    console.log("ding1");
+
+    newMsgP1 = $("#player1MsgText").val().trim();
+    console.log(newMsgP1);
+
+    postMsgP1()
+
+    $("#player1MsgText").val("");
+});
+
+$("#player2Msgs").on("click",function(event){
+    event.preventDefault();
+    console.log("ding2");
+
+    newMsgP2 = $("#player2MsgText").val().trim();
+    console.log(newMsgP2);
+
+    postMsgP2();
+
+    $("#player2MsgText").val("");
+});
+
+//will it be better as a array?
+function postMsgP1() {
+    $("#newMsgP1").append(`<P class = "messagesItem time">${newMsgP1}</P>`)
+}
+
+function postMsgP2() {
+    $("#newMsgP2").append(`<P class = "messagesItem time">${newMsgP2}</P>`)
+}
