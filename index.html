@@ -10,7 +10,8 @@
 
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+
 </head>
 <body>
     <div class="wrapper1" id="wrapper1">
@@ -19,16 +20,11 @@
 
         <div id="welMsg"></div>
 
-        <div class="player1login">
-            <button class="player1Button" id="player1button" type="submit">ENTER</button>
-            <input type="text" name="player one Name" id="player1Name" placeholder="PLAYER 1 NAME">
-            <div id="ready1"></div>
-        </div>
-
-        <div class="player2login">
-            <button class="player2Button" type="submit" id="player2button">ENTER</button>
-            <input type="text" name="player two Name" id="player2Name" placeholder="PLAYER 2 NAME" >
+        <div id="userLoginForm">
+            <button class="userButton" type="submit" id="nameBtn">ENTER </button>
+            <input type="text" name="Player Name" id="nameInput" placeholder="Enter your name" >
             <div id="ready2"></div>
+
         </div>
     </div>
 
@@ -38,7 +34,7 @@
 
         <div class="rps-game">
             <div class="player1">
-                <span id="name1"></span> 
+                <span id="name"></span> 
                 <div>select a button to play</div>
                 <div class="game-Area">
                     <div class="buttons">
@@ -54,7 +50,7 @@
                 </div> 
             </div>
 
-            <div class="player2">
+            <!-- <div class="player2">
                 <span id="name2"></span>
                 <div>select a button to play</div>
                 <div class="game-Area">
@@ -69,7 +65,7 @@
                         <div class="losses dispaly">LOSSES : 1</div>   
                     </div>        
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -77,33 +73,17 @@
 
             <h2 class="msgAppTitle">CHAT ROOM</h2>
 
-            <div class="player1">
-                <span id="name1Msg"></span>
-                <div class="messages" id="newMsgP1">
-                    <P class = "messagesItem time">chat room is avaible now</P>
-                    <P class = "messagesItem time">13:55 i won this time around</P>
-                    <P class = "messagesItem time">13:57 Lets play more</P>
-                    <!-- append new messages here -->
-                </div>
-                <div class="msgTextArea">
-                    <button class="sendMsg" id="player1Msgs" type="submit">SEND ➥</button>
-                    <input type="text" name="player 1 Msg" id="player1MsgText" placeholder="new Message">
-                </div>
+            <div class="chat-window">
+                <ul id="messages">
+                    
+                </ul>
+
+                <form class="msgTextArea" id="messageForm">
+                    <input type="text" name="new Message" id="msgInput" placeholder="new Message">
+                    <button class="sendMsg" id="submitBtn" type="submit">SEND ➥</button>
+                </form>
             </div>
 
-            <div class="player2">
-                <span id="name2Msg"></span>
-                <div class="messages" id="newMsgP2">
-                    <P class = "messagesItem time">chat room is avaible now</P>
-                    <P class = "messagesItem time">13:45 hi</P>
-                    <P class = "messagesItem time">13:56 lol</P>
-                    <!-- append new messages here -->
-                </div>
-                <div class="msgTextArea" id="newMsgP2">
-                    <button class="sendMsg" id="player2Msgs" type="submit">SEND ➥</button>
-                    <input type="text" name="player 2 Msg" id="player2MsgText" placeholder="new Message">
-                </div>
-            </div>
         </div>
 
     </div>
