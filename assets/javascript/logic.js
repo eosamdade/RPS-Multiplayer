@@ -17,19 +17,13 @@ firebase.initializeApp(firebaseConfig);
 //create a variable to ref database
 var database = firebase.database();
 
-// var player1name = "";
-// var player2Name = "";
-// var player1NewMsg = "";
-// var player2NewMsg = "";
-// var newMsgP1 = "";
-// var newMsgP2 = "";
-
 var msgScreen = $("#messages");
 var msgForm = $("#messageForm");
 var msgInput = $("#msgInput");
 var msgBtn = $("#submitBtn");
 var database = firebase.database();
 var msgRef = database.ref("/game/msgs/")
+var playerRef = database.ref("game")
 var id = uuid();
 var name;
 
@@ -40,6 +34,12 @@ $("#nameBtn").on("click",function(event){
     var newPlayer = $("#nameInput").val().trim();
     console.log(newPlayer);
     
+    var player = {
+        id,
+        newPlayer,
+    }
+
+    playerRef.push(player);
 
     if (newPlayer.length < 4) {
         return alert ("name needs to be more than 4 Characters!")
@@ -50,10 +50,65 @@ $("#nameBtn").on("click",function(event){
     $("#welMsg").append(`<p class="ready">PLAYER : ${$("#nameInput").val()} IS READY ⌚ </p>`)
 
     $("#name").append((`<p class="ready">${$("#nameInput").val()} ⌚ </p>`))
-    
+
     return (name = $("#nameInput").val());
 
 });
+
+
+//RPS GAME SESSION
+
+
+//player one rps
+$("#p1Rock").on("click",function(){
+    console.log(`${name} Rocks`)
+})
+
+$("#p1Paper").on("click",function(){
+    console.log(`${name} Papers`)
+})
+
+$("#p1Scissors").on("click",function(){
+    console.log(`${name} Scissors`)
+})
+
+
+//MSG APP
+
+$("#messageForm").on("submit",function(event){
+    event.preventDefault();
+    console.log("form submited");
+
+    var text = $("#msgInput").val().trim();
+
+    if(!$("#msgInput").val().trim()) return;
+
+    var msg = {
+        id,
+        name,
+        text,
+    };
+
+    msgRef.push(msg);
+
+    $("#msgInput").val("");
+})
+
+function updateMsgs (data) {
+   var { id: userId,name,text} = (data.val());
+   var msg = `<li class=" msg ${id == userId && "my" }">
+   <span>
+       <i class="name">${name} :</i>
+       ${text}
+   </span></li>`
+
+   $("#messages").append(msg);
+   
+}
+
+msgRef.on("child_added", updateMsgs)
+
+
 
 
 //enter click event
@@ -149,57 +204,3 @@ $("#nameBtn").on("click",function(event){
 
 
 
-
-
-
-//RPS GAME SESSION
-
-
-//player one rps
-$("#p1Rock").on("click",function(){
-    console.log(`${name} Rocks`)
-})
-
-$("#p1Paper").on("click",function(){
-    console.log(`${name} Papers`)
-})
-
-$("#p1Scissors").on("click",function(){
-    console.log(`${name} Scissors`)
-})
-
-
-//MSG APP
-
-$("#messageForm").on("submit",function(event){
-    event.preventDefault();
-    console.log("form submited");
-
-    var text = $("#msgInput").val().trim();
-
-    if(!$("#msgInput").val().trim()) return;
-
-    var msg = {
-        id,
-        name,
-        text,
-    };
-
-    msgRef.push(msg);
-
-    $("#msgInput").val("");
-})
-
-function updateMsgs (data) {
-   var { id: userId,name,text} = (data.val());
-   var msg = `<li class=" msg ${id == userId && "my" }">
-   <span>
-       <i class="name">${name} :</i>
-       ${text}
-   </span></li>`
-
-   $("#messages").append(msg);
-   
-}
-
-msgRef.on("child_added", updateMsgs)
