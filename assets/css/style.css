@@ -17,3 +17,30 @@
     width: 100;
     text-align: center;
 }
+
+.messages {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+.msg {
+    list-style-type: none;
+}
+
+.name {
+    color: blue;
+    
+}
+
+.mygame {
+    text-align: right;
+}
+
+.mygame span {
+    background-color: black;
+    color: white;
+}
+
+.mygame i {
+    display: none;
+}

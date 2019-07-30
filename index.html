@@ -10,6 +10,8 @@
 
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+
     
 </head>
 <body>
@@ -77,37 +79,57 @@
 
             <h2 class="msgAppTitle">CHAT ROOM</h2>
 
-            <div class="player1">
-                <span id="name1Msg"></span>
+            <div class="chatBot">
+                <!-- <span id="name1Msg"></span> -->
                 <div class="messages" id="newMsgP1">
                     <P class = "messagesItem time">chat room is avaible now</P>
-                    <P class = "messagesItem time">13:55 i won this time around</P>
-                    <P class = "messagesItem time">13:57 Lets play more</P>
+                    <ul id="msgScreen">
+
+                        <li class="msg mygame">
+                            <!-- <span>
+                                <i class="name">play : </i>
+                                hello
+                            </span> -->
+                        </li>
+
+                        <li class="msg">
+                            <!-- <span>
+                                <i class="name">wise :</i>
+                                hello
+                            </span> -->
+                        </li>
+
+                    </ul>
+                    <!-- <P class = "messagesItem time">13:55 i won this time around</P>
+                    <P class = "messagesItem time">13:57 Lets play more</P> -->
                     <!-- append new messages here -->
                 </div>
+
+
                 <div class="msgTextArea">
                     <button class="sendMsg" id="player1Msgs" type="submit">SEND ➥</button>
                     <input type="text" name="player 1 Msg" id="player1MsgText" placeholder="new Message">
                 </div>
             </div>
 
-            <div class="player2">
+            <!-- <div class="player2">
                 <span id="name2Msg"></span>
                 <div class="messages" id="newMsgP2">
                     <P class = "messagesItem time">chat room is avaible now</P>
                     <P class = "messagesItem time">13:45 hi</P>
                     <P class = "messagesItem time">13:56 lol</P>
-                    <!-- append new messages here -->
+                    append new messages here
                 </div>
-                <div class="msgTextArea" id="newMsgP2">
+                <div class="msgTextArea">
                     <button class="sendMsg" id="player2Msgs" type="submit">SEND ➥</button>
                     <input type="text" name="player 2 Msg" id="player2MsgText" placeholder="new Message">
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
 
+    
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

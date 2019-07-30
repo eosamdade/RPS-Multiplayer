@@ -1,6 +1,7 @@
 console.log("hello world");
 console.log($);
 
+
 //initialize Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyBluu0AHxa8NxIpBrXRMIfuJRlcxTXEXRs",
@@ -16,6 +17,7 @@ firebase.initializeApp(firebaseConfig);
 
 //create a variable to ref database
 var database = firebase.database();
+const msgRef = database.ref("/msg")
 
 var player1name = "";
 var player2Name = "";
@@ -23,7 +25,8 @@ var player1NewMsg = "";
 var player2NewMsg = "";
 var newMsgP1 = "";
 var newMsgP2 = "";
-
+var gameid = ""
+var id = uuid();
 
 //enter click event
 $("#player1button").on("click",function(event){
@@ -32,16 +35,23 @@ $("#player1button").on("click",function(event){
 
     player1name = $("#player1Name").val().trim();
 
-    database.ref().child("player 1 data").set({
+    database.ref("/games").push({
         player1name: player1name,
-        player1newMsg: player1NewMsg,
+        playerId : id
+        // player1newMsg: player1NewMsg,
         // dateAdded: firebase.database.ServerVlue.TIMESTAMP
     })
+
+    //making game id
+    // .then(function(data){
+    //     console.log(data.key);
+    //     gameid = data.key
+    // })
 
     // player1NameDisplay();
     //displaying players name in rps multiplayer and chatroom
     $("#name1").append(`<div class="palyer1nameDisplay"><h2 id="player1">${player1name}♫</h2></div>`);
-    $("#name1Msg").append(`<div class="palyer1nameDisplay"><h2 id="player1">${player1name}♫</h2></div>`);
+    // $("#name1Msg").append(`<div class="palyer1nameDisplay"><h2 id="player1">${player1name}♫</h2></div>`);
 
     readyPlayer1();
 
@@ -50,6 +60,10 @@ $("#player1button").on("click",function(event){
 
 });
 
+// database.ref("/games").on("child_added",function (snapshot) {
+//     document.querySelector(".currentgames").append(snapshot.key)
+// })
+
 
 $("#player2button").on("click",function(event){
     event.preventDefault();
@@ -57,9 +71,12 @@ $("#player2button").on("click",function(event){
 
     player2name = $("#player2Name").val().trim();
 
-    database.ref().child("Player 2 data").set({
-        player2name: player2name,
-        player2newMsg: player2NewMsg,
+    database
+        .ref(`/games/${gameid}`)
+        .set({
+            player2name: player2name,
+            playerId : id,
+            // player2newMsg: player2NewMsg,
     })
 
     // player2NameDisplay();
@@ -76,21 +93,21 @@ $("#player2button").on("click",function(event){
 });
 
 
-database.ref().on("value",function(p1datasnapshot){
-    player1Name = (p1datasnapshot.val().player1name);
-    console.log(p1datasnapshot.val().player1NewMsg);
+// database.ref().on("value",function(p1datasnapshot){
+//     player1Name = (p1datasnapshot.val().player1name);
+//     console.log(p1datasnapshot.val().player1NewMsg);
     
-},function(errorobject) {
-    console.log("Error handled: " + errorobject.code);
-});
+// },function(errorobject) {
+//     console.log("Error handled: " + errorobject.code);
+// });
 
-database.ref().on("value", function(p2datasnapshot){
-    player2Name = (p2datasnapshot.val().player2name);
-    console.log(p2datasnapshot.val().player2NewMsg);
+// database.ref().on("value", function(p2datasnapshot){
+//     player2Name = (p2datasnapshot.val().player2name);
+//     console.log(p2datasnapshot.val().player2NewMsg);
 
-},function(errorobject) {
-    console.log("Error handled: " + errorobject.code);
-});
+// },function(errorobject) {
+//     console.log("Error handled: " + errorobject.code);
+// });
 
 
 //showing that players have login successfully
@@ -159,28 +176,47 @@ $("#player1Msgs").on("click",function(event){
     newMsgP1 = $("#player1MsgText").val().trim();
     console.log(newMsgP1);
 
-    postMsgP1()
+    if(!newMsgP1)return;
+
+    database
+        .ref("/games/chat/")
+        .push({
+            id : id,
+            Name: player1name,
+            Msg: newMsgP1,
+        // timeStamp: firebase.database.ServerVlue.TIMESTAMP 
+    })
+
+    var updateMsgs = data => {
+        const {id : userID,Name,Msg} = data.val();
+        // console.log(id,Name,Msg)
+        var msg = `<li class=" newPlayer ${id == userID && "mygame"}">
+                            <span>
+                                <i class="name">${{player1name}} : </i>
+                                ${newMsgP1}
+                            </span>
+                    </li>`;
+        
+        $("#msgScreen").append(msg)
+    }
+
+    database.ref("/games/chat/").on("child_added",updateMsgs)
 
     $("#player1MsgText").val("");
 });
 
-$("#player2Msgs").on("click",function(event){
-    event.preventDefault();
-    console.log("ding2");
+// $("#player2Msgs").on("click",function(event){
+//     event.preventDefault();
+//     console.log("ding2");
 
-    newMsgP2 = $("#player2MsgText").val().trim();
-    console.log(newMsgP2);
+//     newMsgP2 = $("#player2MsgText").val().trim();
+//     console.log(newMsgP2);
 
-    postMsgP2();
+//     $("#newMsgP2").append(`<P class = "messagesItem time">${newMsgP2}</P>`)
 
-    $("#player2MsgText").val("");
-});
+//     $("#player2MsgText").val("");
+// });
 
 //will it be better as a array?
-function postMsgP1() {
-    $("#newMsgP1").append(`<P class = "messagesItem time">${newMsgP1}</P>`)
-}
 
-function postMsgP2() {
-    $("#newMsgP2").append(`<P class = "messagesItem time">${newMsgP2}</P>`)
-}
+
