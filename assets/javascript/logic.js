@@ -26,14 +26,18 @@ var msgRef = database.ref("/game/msgs/")
 var playerRef = database.ref("game")
 var id = uuid();
 var name;
+var newPlayer = "";
+
+
+var curPlayer = $("#currentPlayer").append(`<P id="gametag">⌚ CURRENT PLAYER</P> `)
 
 //enter click event
 $("#nameBtn").on("click",function(event){
     event.preventDefault();
-
-    var newPlayer = $("#nameInput").val().trim();
-    console.log(newPlayer);
     
+    newPlayer = $("#nameInput").val().trim();
+    console.log(newPlayer);
+
     var player = {
         id,
         newPlayer,
@@ -45,15 +49,26 @@ $("#nameBtn").on("click",function(event){
         return alert ("name needs to be more than 4 Characters!")
     }
 
+    $("#name").append(newPlayer);
+    $("#player").append(newPlayer);    
+
+    localStorage.clear();
+    localStorage.setItem("playername", newPlayer);
+    localStorage.setItem("pllayerId", id);
+    
+
     $("#userLoginForm").hide();
-
-    $("#welMsg").append(`<p class="ready">PLAYER : ${$("#nameInput").val()} IS READY ⌚ </p>`)
-
-    $("#name").append((`<p class="ready">${$("#nameInput").val()} ⌚ </p>`))
-
+    
     return (name = $("#nameInput").val());
-
 });
+
+$("#name").text(localStorage.getItem("playername"));
+$("#player").text(localStorage.getItem("playername"));
+
+$("#nameDisplay").append(`<P id="gametag">⌚</P> `)
+
+
+
 
 
 //RPS GAME SESSION

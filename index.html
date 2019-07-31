@@ -14,14 +14,24 @@
 
 </head>
 <body>
+
+    <div>
+        <button id="start">START</button>
+        <div id="welMsg"><P id="gametag">⌚ READY TO RPS !</P> </div>
+    </div>
     <div class="wrapper1" id="wrapper1">
 
-        <h1 class="title">WELCOME TO RPS GAME</h1>
+        <h1 class="title">RPS</h1>
 
-        <div id="welMsg"></div>
+        <div id="gamertag"></div>
+        <div id="currentPlayer"></div>
+        
+        <div id="player"></div>
+        
+        
 
         <div id="userLoginForm">
-            <button class="userButton" type="submit" id="nameBtn">ENTER </button>
+            <button class="userButton" type="submit" id="nameBtn">GO</button>
             <input type="text" name="Player Name" id="nameInput" placeholder="Enter your name" >
             <div id="ready2"></div>
 
@@ -31,11 +41,14 @@
     <h1 class="title">RPS Multiplayer</h1>
 
     <div class="wrapper-2">
-
+   
         <div class="rps-game">
 
             <div class="player1">
-                <span id="name"></span>
+                <span id="nameDisplay">
+                    <p id="name" class="ready"></p>
+                    <!-- <P id="gametag">⌚</P>  -->
+                </span>
                 <div>select a button to play</div>
                 <div class="game-Area">
                     <div class="buttons">
