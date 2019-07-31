@@ -38,6 +38,7 @@ $("#start").on("click",function(){
     $("#userLoginForm").show();
     $("#start").hide();
     $("#currentPlayer").show()
+    localStorage.clear();
 })
 
 var curPlayer = $("#currentPlayer").append(`<P id="gametag">⌚ CURRENT PLAYER</P> `)
@@ -98,17 +99,13 @@ $(".rpsBtns").on("click",function () {
         console.log(snapshot.val().rpsVal);
         console.log(snapshot.val().id);
         console.log(snapshot.val().name);
-        
     })
 })
-
-
-
 
 //MSG APP
 $("#messageForm").on("submit",function(event){
     event.preventDefault();
-    
+
     console.log("form submited");
 
     var text = $("#msgInput").val().trim();
