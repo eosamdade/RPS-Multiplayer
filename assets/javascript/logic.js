@@ -24,10 +24,21 @@ var msgBtn = $("#submitBtn");
 var database = firebase.database();
 var msgRef = database.ref("/game/msgs/")
 var playerRef = database.ref("game")
+var rpsRef = database.ref("/game/rpsgame/")
 var id = uuid();
 var name;
 var newPlayer = "";
+var rpsVal = "";
 
+$("#userLoginForm").hide();
+$("#currentPlayer").hide();
+
+$("#start").on("click",function(){
+    $("#welMsg").hide();
+    $("#userLoginForm").show();
+    $("#start").hide();
+    $("#currentPlayer").show()
+})
 
 var curPlayer = $("#currentPlayer").append(`<P id="gametag">⌚ CURRENT PLAYER</P> `)
 
@@ -56,7 +67,6 @@ $("#nameBtn").on("click",function(event){
     localStorage.setItem("playername", newPlayer);
     localStorage.setItem("pllayerId", id);
     
-
     $("#userLoginForm").hide();
     
     return (name = $("#nameInput").val());
@@ -67,31 +77,38 @@ $("#player").text(localStorage.getItem("playername"));
 
 $("#nameDisplay").append(`<P id="gametag">⌚</P> `)
 
-
-
-
-
 //RPS GAME SESSION
-
-
 //player one rps
-$("#p1Rock").on("click",function(){
-    console.log(`${name} Rocks`)
+$(".rpsBtns").on("click",function () {
+    
+    var rpsVal = $( this ).text();
+    $("#Rock").val(rpsVal);
+    
+    $("#gameScreen").html(`<p id="playerVal" class="playerVal">${rpsVal}</p>`)
+    
+    var RPSGame = {
+        name,
+        id,
+        rpsVal,
+    }
+
+    rpsRef.push(RPSGame)
+
+    rpsRef.on("child_added",function(snapshot){
+        console.log(snapshot.val().rpsVal);
+        console.log(snapshot.val().id);
+        console.log(snapshot.val().name);
+        
+    })
 })
 
-$("#p1Paper").on("click",function(){
-    console.log(`${name} Papers`)
-})
 
-$("#p1Scissors").on("click",function(){
-    console.log(`${name} Scissors`)
-})
 
 
 //MSG APP
-
 $("#messageForm").on("submit",function(event){
     event.preventDefault();
+    
     console.log("form submited");
 
     var text = $("#msgInput").val().trim();
@@ -116,106 +133,10 @@ function updateMsgs (data) {
        <i class="name">${name} :</i>
        ${text}
    </span></li>`
-
    $("#messages").append(msg);
-   
 }
 
 msgRef.on("child_added", updateMsgs)
-
-
-
-
-//enter click event
-// $("#nameSubBtn").on("submit",function(event){
-    
-//     event.preventDefault();
-//     console.log("am lsiterning player 1");
-
-//     // console.log( $("#nameInput").val().trim());
-    
-//     // database.ref().child("player 1 data").set({
-//     //     player1name: player1name,
-//     //     player1newMsg: player1NewMsg,
-//     //     // dateAdded: firebase.database.ServerVlue.TIMESTAMP
-//     // })
-
-//     // // player1NameDisplay();
-//     // //displaying players name in rps multiplayer and chatroom
-//     // $("#name1").append(`<div class="palyer1nameDisplay"><h2 id="player1">${player1name}♫</h2></div>`);
-//     // $("#name1Msg").append(`<div class="palyer1nameDisplay"><h2 id="player1">${player1name}♫</h2></div>`);
-
-//     // readyPlayer1();
-
-//     // $("#player1Name").hide();
-//     // $("#player1button").hide();
-
-// });
-
-
-// $("#player2button").on("click",function(event){
-//     event.preventDefault();
-//     console.log("am lsiterning player 2");
-
-//     player2name = $("#player2Name").val().trim();
-
-//     database.ref().child("Player 2 data").set({
-//         player2name: player2name,
-//         player2newMsg: player2NewMsg,
-//     })
-
-//     // player2NameDisplay();
-//     //displaying players name in rps multiplayer and chatroom
-//     $("#name2").append(`<div class="palyer2nameDisplay"><h2 id="player2">${player2name}❀</h2></div>`);
-//     $("#name2Msg").append(`<div class="palyer2nameDisplay"><h2 id="player2">${player2name}❀</h2></div>`);
-
-//     readyPlayer2();
-
-//     $("#player2Name").hide();
-//     $("#player2button").hide();
-    
-//     $("#welMsg").append(`<h2 class="welMsg">CURRENT PLAYERS</h2>`)
-// });
-
-
-// database.ref().on("value",function(p1datasnapshot){
-//     player1Name = (p1datasnapshot.val().player1name);
-//     // console.log(p1datasnapshot.val().player1NewMsg);
-    
-// },function(errorobject) {
-//     console.log("Error handled: " + errorobject.code);
-// });
-
-// database.ref().on("value", function(p2datasnapshot){
-//     player2Name = (p2datasnapshot.val().player2name);
-//     // console.log(p2datasnapshot.val().player2NewMsg);
-
-// },function(errorobject) {
-//     console.log("Error handled: " + errorobject.code);
-// });
-
-
-// //showing that players have login successfully
-// function readyPlayer1 () {
-//     $("#ready1").append(`<p class="ready">PLAYER 1 : ${player1name} IS READY ♫ </p>`)
-// }
-
-// function readyPlayer2 () {
-//     $("#ready2").append(`<p class="ready">PLAYER 2 : ${player2name} IS READY ❀</p>`)
-// }
-
-
-
-
-
-
-
-
-// //showing the current palyers on load of the App
-// // database.ref().orderByChild("dataAdded").limitToLast(1).on("value", function(snapshot) {
-// //     $("#name1").text(snapshot.val().player1Name);
-// //     $("#name2").text(snapshot.val().player2Name);
-// // })
 
 
 

@@ -17,7 +17,7 @@
 
     <div>
         <button id="start">START</button>
-        <div id="welMsg"><P id="gametag">⌚ READY TO RPS !</P> </div>
+        <div id="welMsg"><P class="shotMsg"></P>⌚ READY TO RPS !</P> </div>
     </div>
     <div class="wrapper1" id="wrapper1">
 
@@ -27,8 +27,6 @@
         <div id="currentPlayer"></div>
         
         <div id="player"></div>
-        
-        
 
         <div id="userLoginForm">
             <button class="userButton" type="submit" id="nameBtn">GO</button>
@@ -51,11 +49,16 @@
                 </span>
                 <div>select a button to play</div>
                 <div class="game-Area">
-                    <div class="buttons">
-                        <button id="p1Rock" type="submit">R</button>
-                        <button id="p1Paper" type="submit">P</button>
-                        <button id="p1Scissors" type="submit">S</button>
+                    <divclass="buttons">
+                        <button class= "rpsBtns" id="Rock" type="submit" value="R">R</button>
+                        <button class= "rpsBtns" id="p1Paper" type="submit">P</button>
+                        <button class= "rpsBtns" id="p1Scissors" type="submit">S</button>
                     </div>
+
+                    <div id="gameScreen">
+                        
+                    </div>
+
                     <div class="score">
                         <h2>SCORE</h2>
                         <div class="wins display">WINS : 2</div>
